@@ -3,9 +3,10 @@ import "./globals.css";
 import Header from "@/components/navigation/Header";
 import Footer from "@/components/footer/Footer";
 import AnnouncementBar from "@/components/navigation/AnnouncementBar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const viewport: Viewport = {
-  themeColor: "#064B35",
+  themeColor: "#043526",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | AasraLife Foundation",
   },
   description:
-    "AasraLife Foundation is dedicated to humanitarian support, medical aid, sustainable livelihood, education, women's empowerment, and food security in Pakistan and beyond.",
+    "AasraLife Foundation is an international humanitarian initiative dedicated to medical assistance, sustainable livelihood, education, women's empowerment, and food security in Pakistan and beyond.",
   keywords: [
     "AasraLife Foundation",
     "Pakistan Humanitarian Organization",
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
     "Women's Empowerment Pakistan",
     "SadaPay Donation",
     "Transparent Charity",
+    "Ethical Humanitarian Aid",
   ],
   authors: [{ name: "AasraLife Foundation" }],
   creator: "AasraLife Foundation",
@@ -93,11 +95,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="flex min-h-screen flex-col bg-[#FFF9EE] text-[#172B26] antialiased selection:bg-[#D6A943] selection:text-white">
+      <body className="flex min-h-screen flex-col bg-[#FFF9EE] text-[#172B26] antialiased selection:bg-[#D6A943] selection:text-[#043526]">
         <AnnouncementBar />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <SpeedInsights />
       </body>
     </html>
   );

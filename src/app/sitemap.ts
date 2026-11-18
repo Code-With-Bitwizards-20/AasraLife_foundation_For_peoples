@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/about",
     "/mission-vision",
+    "/impact",
     "/programs",
     "/programs/medical-aid",
     "/programs/education",
@@ -28,7 +29,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: route === "" || route === "/transparency" ? "daily" : "weekly",
-    priority: route === "" ? 1.0 : route.startsWith("/programs") || route === "/donate" ? 0.9 : 0.7,
+    changeFrequency:
+      route === "" || route === "/transparency" || route === "/impact"
+        ? "daily"
+        : "weekly",
+    priority:
+      route === ""
+        ? 1.0
+        : route.startsWith("/programs") || route === "/impact" || route === "/donate"
+        ? 0.9
+        : 0.7,
   }));
 }

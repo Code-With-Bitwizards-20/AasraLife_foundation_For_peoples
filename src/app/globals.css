@@ -3,12 +3,19 @@
 @theme {
   --color-forest: #064B35;
   --color-forest-dark: #043526;
+  --color-forest-deep: #022319;
+  --color-forest-glow: #0E6B4E;
   --color-gold: #D6A943;
   --color-gold-light: #F7E7C4;
+  --color-gold-accent: #E5B854;
   --color-ivory: #FFF9EE;
+  --color-ivory-warm: #FFFDF8;
   --color-charcoal: #172B26;
+  --color-charcoal-deep: #0D1D18;
   --color-soft-green: #EAF3ED;
-  --color-muted-grey: #718078;
+  --color-soft-green-hover: #D8EADE;
+  --color-muted-grey: #4A5B53;
+  --color-light-grey: #6B7C74;
 
   --font-heading: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
@@ -16,9 +23,30 @@
 }
 
 :root {
-  --bg-primary: #FFF9EE;
-  --text-primary: #172B26;
-  --text-muted: #718078;
+  /* Semantic Design Tokens */
+  --color-primary: #064B35;
+  --color-primary-dark: #043526;
+  --color-primary-deep: #022319;
+  --color-accent: #D6A943;
+  --color-accent-light: #F7E7C4;
+  --color-background: #FFF9EE;
+  --color-background-warm: #FFFDF8;
+  --color-surface: #FFFFFF;
+  --color-surface-translucent: rgba(255, 255, 255, 0.85);
+  --color-text-primary: #172B26;
+  --color-text-secondary: #3D5A50;
+  --color-text-inverse: #FFFFFF;
+  --color-text-inverse-muted: #E2ECE6;
+  --color-border: rgba(6, 75, 53, 0.12);
+  --color-border-subtle: rgba(6, 75, 53, 0.08);
+  --color-border-gold: rgba(214, 169, 67, 0.35);
+  --color-focus: #D6A943;
+
+  /* Glassmorphism & Elevation */
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 10px 30px -5px rgba(6, 75, 53, 0.08), 0 0 1px 1px rgba(6, 75, 53, 0.05);
+  --glass-card-dark: rgba(4, 53, 38, 0.75);
 }
 
 * {
@@ -33,8 +61,8 @@ html {
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
   font-family: var(--font-body), system-ui, sans-serif;
   min-height: 100vh;
   width: 100%;
@@ -48,88 +76,133 @@ body {
 /* Typography Scales with Responsive Fluid clamp() */
 h1, .h1 {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 4.5vw + 1rem, 3.75rem);
-  line-height: 1.12;
+  font-size: clamp(2.15rem, 4.2vw + 1rem, 3.85rem);
+  line-height: 1.14;
   font-weight: 800;
   letter-spacing: -0.025em;
-  color: #172B26;
+  color: var(--color-text-primary);
 }
 
 h2, .h2 {
   font-family: var(--font-heading);
-  font-size: clamp(1.65rem, 3vw + 0.6rem, 2.75rem);
+  font-size: clamp(1.75rem, 2.8vw + 0.6rem, 2.85rem);
   line-height: 1.18;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #172B26;
+  color: var(--color-text-primary);
 }
 
 h3, .h3 {
   font-family: var(--font-heading);
-  font-size: clamp(1.35rem, 2vw + 0.5rem, 1.85rem);
+  font-size: clamp(1.35rem, 1.8vw + 0.5rem, 1.95rem);
   line-height: 1.25;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: #172B26;
+  color: var(--color-text-primary);
 }
 
 h4, .h4 {
   font-family: var(--font-heading);
-  font-size: clamp(1.15rem, 1.2vw + 0.5rem, 1.45rem);
-  line-height: 1.3;
+  font-size: clamp(1.15rem, 1.1vw + 0.5rem, 1.45rem);
+  line-height: 1.32;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: #172B26;
+  color: var(--color-text-primary);
 }
 
 h5, .h5 {
   font-family: var(--font-heading);
-  font-size: clamp(1rem, 0.8vw + 0.5rem, 1.2rem);
-  line-height: 1.35;
+  font-size: clamp(1rem, 0.75vw + 0.5rem, 1.2rem);
+  line-height: 1.38;
   font-weight: 600;
-  color: #172B26;
+  color: var(--color-text-primary);
 }
 
 h6, .h6 {
   font-family: var(--font-heading);
-  font-size: clamp(0.85rem, 0.5vw + 0.5rem, 1rem);
+  font-size: clamp(0.85rem, 0.45vw + 0.5rem, 1rem);
   line-height: 1.4;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #718078;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
 }
 
+/* HIGH CONTRAST BODY PARAGRAPHS - WCAG 2.2 AA compliant */
 p, .p-body {
-  font-size: clamp(0.925rem, 0.25vw + 0.85rem, 1.075rem);
-  line-height: 1.65;
-  color: #718078;
+  font-size: clamp(0.95rem, 0.2vw + 0.88rem, 1.075rem);
+  line-height: 1.68;
+  color: #2D433B; /* High contrast on light surfaces */
+}
+
+/* Dark Section Text Rules - Strict Contrast */
+.theme-dark, [data-theme="dark"], .bg-forest-dark, .bg-forest {
+  color: var(--color-text-inverse);
+}
+
+.theme-dark p, [data-theme="dark"] p, .bg-forest-dark p, .bg-forest p, .dark-text-rule p {
+  color: var(--color-text-inverse-muted);
 }
 
 blockquote {
   font-family: var(--font-editorial);
   font-style: italic;
-  font-size: clamp(1.1rem, 1.5vw + 0.5rem, 1.5rem);
-  line-height: 1.5;
-  border-left: 4px solid #D6A943;
+  font-size: clamp(1.15rem, 1.4vw + 0.5rem, 1.55rem);
+  line-height: 1.52;
+  border-left: 3px solid var(--color-accent);
   padding-left: 1.25rem;
-  color: #064B35;
+  color: var(--color-primary);
 }
 
-/* Accessibility Focus States */
+/* Accessible Focus States */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #D6A943;
+  outline: 2px solid var(--color-focus);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 /* Text Wrapping Protection */
 h1, h2, h3, h4, h5, h6, p, span, a {
   overflow-wrap: anywhere;
+}
+
+/* Futuristic Micro-Styles & Glassmorphism */
+.glass-surface {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 30px -5px rgba(6, 75, 53, 0.06), 0 0 1px 1px rgba(6, 75, 53, 0.04);
+}
+
+.glass-surface-dark {
+  background: rgba(4, 53, 38, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(214, 169, 67, 0.25);
+  box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.35);
+}
+
+.futuristic-card {
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.futuristic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(6, 75, 53, 0.12), 0 0 1px 1px rgba(214, 169, 67, 0.3);
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px -4px rgba(214, 169, 67, 0.25);
+}
+
+.emerald-glow {
+  box-shadow: 0 0 30px -5px rgba(6, 75, 53, 0.3);
 }
 
 /* Respect user's motion preferences */

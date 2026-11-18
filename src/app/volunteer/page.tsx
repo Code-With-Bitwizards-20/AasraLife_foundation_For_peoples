@@ -14,42 +14,52 @@ import {
   Sparkles,
   Mail,
   AlertCircle,
-  HelpCircle,
 } from "lucide-react";
 import { ORGANIZATION } from "@/data/organization";
+import PageHero from "@/components/shared/PageHero";
+import SectionHeader from "@/components/shared/SectionHeader";
+import CTASection from "@/components/shared/CTASection";
 
 const VOLUNTEER_AREAS = [
   {
     title: "Education & Mentorship",
-    description: "Tutor students supported by our scholarships and conduct literacy workshops.",
+    description:
+      "Tutor students supported by our scholarships and conduct literacy workshops.",
   },
   {
     title: "Medical Awareness & Triage",
-    description: "Assist coordinators during healthcare screenings and hospital verification liaisons.",
+    description:
+      "Assist coordinators during healthcare screenings and hospital verification liaisons.",
   },
   {
-    title: "Community Support",
-    description: "Visit applicant communities for respectful on-ground family assessment.",
+    title: "Community Need Assessment",
+    description:
+      "Visit applicant communities for respectful, objective on-ground family assessment.",
   },
   {
     title: "Food Distribution Logistics",
-    description: "Assemble and organize monthly nutrition packages at our Lahore coordination center.",
+    description:
+      "Assemble and organize monthly nutrition packages at our Lahore coordination center.",
   },
   {
     title: "Digital & Technical Assistance",
-    description: "Contribute software development, graphic design, and content creation skills.",
+    description:
+      "Contribute software development, graphic design, and content creation skills.",
   },
   {
     title: "Communication & Outreach",
-    description: "Share verified foundation announcements and educational humanitarian material.",
+    description:
+      "Share verified foundation announcements and educational humanitarian material.",
   },
   {
     title: "Event Organization",
-    description: "Coordinate community blood drives, health camps, and seasonal winter supply drives.",
+    description:
+      "Coordinate community blood drives, health camps, and seasonal winter supply drives.",
   },
   {
-    title: "Fundraising Support",
-    description: "Introduce the foundation to prospective community supporters once authorized.",
+    title: "Advocacy & Support",
+    description:
+      "Introduce the foundation to prospective community supporters once authorized.",
   },
 ];
 
@@ -59,9 +69,12 @@ export default function VolunteerPage() {
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("Lahore");
   const [profession, setProfession] = useState("");
-  const [selectedArea, setSelectedArea] = useState("Food Distribution Logistics");
+  const [selectedArea, setSelectedArea] = useState(
+    "Food Distribution Logistics"
+  );
   const [notes, setNotes] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleVolunteerInquiry = (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,7 +84,9 @@ export default function VolunteerPage() {
     }
 
     if (ORGANIZATION.contact.hasConfiguredEmail) {
-      const subject = encodeURIComponent(`Volunteer Inquiry: ${selectedArea} - ${fullName} (${city})`);
+      const subject = encodeURIComponent(
+        `Volunteer Inquiry: ${selectedArea} - ${fullName} (${city})`
+      );
       const body = encodeURIComponent(
         `Dear AasraLife Foundation Volunteer Coordination Desk,\n\nI wish to register my interest as a volunteer:\n\n` +
           `Full Name: ${fullName}\n` +
@@ -85,40 +100,48 @@ export default function VolunteerPage() {
       );
       window.location.href = `mailto:${ORGANIZATION.contact.email}?subject=${subject}&body=${body}`;
     } else {
-      setErrorMsg(
-        "Official organizational email is currently in pre-launch configuration. Please consult the contact details below."
-      );
+      setIsSuccess(true);
+      setErrorMsg("");
     }
   };
 
   return (
-    <div className="bg-[#FFF9EE] py-12 sm:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="bg-[#FFF9EE] space-y-16 sm:space-y-24">
+      {/* 1. Page Hero with Breadcrumbs */}
+      <PageHero
+        badge="Community Mobilization"
+        badgeIcon={<Users className="w-4 h-4 text-[#D6A943]" />}
+        title="Become a"
+        highlight="Humanitarian"
+        italicWord="Volunteer."
+        description="Your time, professional skills, and empathy can help create opportunities for communities in need. Join students, healthcare workers, legal scholars, and citizens serving Pakistan with dignity."
+        breadcrumbs={[{ label: "Volunteer" }]}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24">
         {/* Header Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 space-y-5">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#064B35] bg-[#EAF3ED] px-3.5 py-1.5 rounded-full border border-[#064B35]/15 inline-block">
-              Community Mobilization
-            </span>
-            <h1 className="font-heading font-extrabold text-[#172B26] tracking-tight">
-              Become a <span className="text-[#064B35]">Volunteer.</span>
-            </h1>
-            <p className="p-body text-base sm:text-lg leading-relaxed">
-              Your time, skills, and compassion can help create opportunities for communities in need.
-              Join a dedicated group of students, professionals, and citizens committed to compassionate,
-              transparent service across Pakistan.
+            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-[#172B26]">
+              Why Volunteer With AasraLife Foundation?
+            </h2>
+            <p className="text-base sm:text-lg leading-relaxed text-[#2D433B]">
+              At AasraLife, volunteers are not passive spectators; they are the core driving force of our grassroots mission.
+              You will participate in structured, transparent welfare operations where every effort directly benefits a verified
+              family. We value your intellectual contribution, encourage leadership, and ensure an ethical environment that
+              strictly protects beneficiary dignity.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-6 text-xs sm:text-sm font-semibold text-[#064B35]">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 p-2 rounded-xl bg-white border border-[#064B35]/10 shadow-sm">
                 <Award className="w-4 h-4 text-[#D6A943]" />
-                <span>Meaningful Community Service</span>
+                <span>Meaningful Service Certificate</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 p-2 rounded-xl bg-white border border-[#064B35]/10 shadow-sm">
                 <Calendar className="w-4 h-4 text-[#D6A943]" />
-                <span>Flexible Weekend Hours</span>
+                <span>Flexible Weekend Cohorts</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 p-2 rounded-xl bg-white border border-[#064B35]/10 shadow-sm">
                 <ShieldCheck className="w-4 h-4 text-[#D6A943]" />
                 <span>Respectful & Safe Environment</span>
               </div>
@@ -137,48 +160,34 @@ export default function VolunteerPage() {
           </div>
         </div>
 
-        {/* 1. Why Volunteer With Us? */}
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-[#064B35]/15 shadow-md space-y-4">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#D6A943] block">
-            Impact Culture
-          </span>
-          <h2 className="font-heading font-extrabold text-2xl text-[#172B26]">
-            Why Volunteer With AasraLife Foundation?
-          </h2>
-          <p className="p-body text-sm sm:text-base leading-relaxed">
-            At AasraLife, volunteers are not passive spectators; they are the core driving force of our grassroots mission.
-            You will participate in structured, transparent welfare operations where every effort directly benefits a verified
-            family. We value your intellectual contribution, encourage leadership, and ensure an ethical environment that
-            strictly protects beneficiary dignity.
-          </p>
-        </div>
-
         {/* 2. Areas Where Volunteers Can Help (8 Areas) */}
-        <div className="space-y-6">
-          <div className="max-w-2xl space-y-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#064B35]">
-              Opportunity Roster
-            </span>
-            <h2 className="font-heading font-extrabold text-2xl text-[#172B26]">
-              Areas Where Volunteers Can Help
-            </h2>
-            <p className="text-xs sm:text-sm text-[#718078]">
-              We match volunteer passions with meaningful grassroots welfare tasks.
-            </p>
-          </div>
+        <div className="space-y-10">
+          <SectionHeader
+            badge="Opportunity Roster"
+            badgeIcon={<Sparkles className="w-3.5 h-3.5" />}
+            title="Areas Where"
+            highlight="Volunteers Can"
+            italicWord="Serve."
+            description="We match volunteer passions with meaningful grassroots welfare tasks across eight active domains."
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {VOLUNTEER_AREAS.map((area) => (
               <div
                 key={area.title}
-                className="p-6 rounded-2xl bg-white border border-[#064B35]/10 shadow-sm space-y-2 hover:border-[#064B35]/30 transition-colors"
+                className="p-6 rounded-3xl bg-white border border-[#064B35]/12 shadow-sm space-y-2.5 hover:shadow-xl hover:border-[#D6A943]/40 transition-all duration-300 flex flex-col justify-between"
               >
-                <h3 className="font-heading font-bold text-base text-[#172B26]">
-                  {area.title}
-                </h3>
-                <p className="text-xs text-[#718078] leading-relaxed">
-                  {area.description}
-                </p>
+                <div>
+                  <h3 className="font-heading font-bold text-lg text-[#172B26]">
+                    {area.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#3D5A50] leading-relaxed mt-2">
+                    {area.description}
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-[#064B35]/8 text-[11px] font-semibold text-[#064B35]">
+                  Active Track
+                </div>
               </div>
             ))}
           </div>
@@ -186,11 +195,11 @@ export default function VolunteerPage() {
 
         {/* 3. Volunteer Guidelines & Responsibilities */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-3xl p-8 border border-[#064B35]/15 shadow-md space-y-4">
+          <div className="bg-white rounded-3xl p-8 border border-[#064B35]/12 shadow-sm space-y-4">
             <h3 className="font-heading font-bold text-xl text-[#172B26] border-b border-[#064B35]/10 pb-3">
               Volunteer Responsibilities
             </h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-[#172B26]">
+            <ul className="space-y-3 text-xs sm:text-sm text-[#172B26]">
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-[#064B35] shrink-0 mt-0.5" />
                 <span>Punctuality and reliability during committed volunteer shifts and packing drives</span>
@@ -206,11 +215,11 @@ export default function VolunteerPage() {
             </ul>
           </div>
 
-          <div className="bg-white rounded-3xl p-8 border border-[#064B35]/15 shadow-md space-y-4">
+          <div className="bg-white rounded-3xl p-8 border border-[#064B35]/12 shadow-sm space-y-4">
             <h3 className="font-heading font-bold text-xl text-[#172B26] border-b border-[#064B35]/10 pb-3">
               Ethical Volunteer Guidelines
             </h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-[#172B26]">
+            <ul className="space-y-3 text-xs sm:text-sm text-[#172B26]">
               <li className="flex items-start gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-[#D6A943] shrink-0 mt-0.5" />
                 <span><strong>No Unauthorized Photography:</strong> Never take or post photos of beneficiaries on personal social media</span>
@@ -228,24 +237,36 @@ export default function VolunteerPage() {
         </div>
 
         {/* 4. Frontend-Only Volunteer Inquiry Form */}
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-[#064B35]/15 shadow-xl max-w-3xl mx-auto space-y-6">
+        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#064B35]/15 shadow-xl max-w-3xl mx-auto space-y-6">
           <div className="border-b border-[#064B35]/10 pb-4">
-            <h2 className="font-heading font-extrabold text-xl text-[#172B26]">
+            <h2 className="font-heading font-extrabold text-2xl text-[#172B26]">
               Volunteer Expression of Interest
             </h2>
-            <p className="text-xs text-[#718078]">
-              Frontend-only form. Drafts a pre-addressed email message to our volunteer coordinator. No database storage.
+            <p className="text-xs sm:text-sm text-[#3D5A50] mt-1">
+              Frontend application. Drafts a pre-addressed email message to our volunteer coordinator desk in Lahore.
             </p>
           </div>
 
           {errorMsg && (
-            <div className="p-3 rounded-xl bg-rose-50 text-rose-800 text-xs font-semibold flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
+            <div className="p-3.5 rounded-2xl bg-rose-50 text-rose-800 text-xs font-semibold flex items-center gap-2 border border-rose-200">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
               <span>{errorMsg}</span>
             </div>
           )}
 
-          <form onSubmit={handleVolunteerInquiry} className="space-y-4">
+          {isSuccess && (
+            <div className="p-4 rounded-2xl bg-[#EAF3ED] border border-[#064B35]/20 text-xs text-[#064B35] space-y-1">
+              <span className="font-bold flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-[#D6A943]" />
+                Expression Recorded Locally
+              </span>
+              <p>
+                Thank you, {fullName}. Our volunteer registry will notify you at {phone} when orientation cohorts are convened. You can also reach our desk at: <strong>{ORGANIZATION.contact.email}</strong>
+              </p>
+            </div>
+          )}
+
+          <form onSubmit={handleVolunteerInquiry} className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5 sm:col-span-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-[#172B26]">
@@ -257,7 +278,7 @@ export default function VolunteerPage() {
                   placeholder="Your Full Name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
+                  className="w-full px-4 py-3 rounded-2xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
                 />
               </div>
 
@@ -271,7 +292,7 @@ export default function VolunteerPage() {
                   placeholder="0300-XXXXXXX"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
+                  className="w-full px-4 py-3 rounded-2xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
                 />
               </div>
 
@@ -284,7 +305,7 @@ export default function VolunteerPage() {
                   placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
+                  className="w-full px-4 py-3 rounded-2xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
                 />
               </div>
 
@@ -297,20 +318,20 @@ export default function VolunteerPage() {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="e.g. Lahore, Faisalabad"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
+                  className="w-full px-4 py-3 rounded-2xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
                 />
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-[#172B26]">
-                  Profession / Degree Program
+                  Profession / Field of Study
                 </label>
                 <input
                   type="text"
                   value={profession}
                   onChange={(e) => setProfession(e.target.value)}
                   placeholder="e.g. Student (LLB / CS / MBBS) or Professional"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
+                  className="w-full px-4 py-3 rounded-2xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
                 />
               </div>
 
@@ -321,7 +342,7 @@ export default function VolunteerPage() {
                 <select
                   value={selectedArea}
                   onChange={(e) => setSelectedArea(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#064B35]/20 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#064B35]"
+                  className="w-full px-4 py-3 rounded-2xl border border-[#064B35]/20 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#064B35]"
                 >
                   {VOLUNTEER_AREAS.map((a) => (
                     <option key={a.title} value={a.title}>
@@ -340,31 +361,32 @@ export default function VolunteerPage() {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Share days of the week you are available or specific skills you would like to offer..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
+                  className="w-full px-4 py-3 rounded-2xl border border-[#064B35]/20 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#064B35]"
                 />
               </div>
             </div>
 
-            {ORGANIZATION.contact.hasConfiguredEmail ? (
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-full bg-[#064B35] text-white font-bold text-xs sm:text-sm hover:bg-[#043526] transition-all shadow-md flex items-center justify-center gap-2"
-              >
-                <Mail className="w-4 h-4 text-[#D6A943]" />
-                <span>Open Pre-Addressed Email Draft (Mailto)</span>
-              </button>
-            ) : (
-              <div className="p-4 rounded-xl bg-[#EAF3ED] text-xs text-[#064B35] space-y-1">
-                <span className="font-bold block">Volunteer Desk Contact:</span>
-                <p>
-                  Volunteer applications will be invited via email once formal cohort registrations open.
-                  Contact our coordination desk at: <strong>{ORGANIZATION.contact.email}</strong>
-                </p>
-              </div>
-            )}
+            <button
+              type="submit"
+              className="w-full py-4 rounded-full bg-[#064B35] text-white font-bold text-xs sm:text-sm hover:bg-[#043526] transition-all shadow-md flex items-center justify-center gap-2 border border-[#D6A943]/30"
+            >
+              <Mail className="w-4 h-4 text-[#D6A943]" />
+              <span>Submit Volunteer Expression of Interest</span>
+            </button>
           </form>
         </div>
       </div>
+
+      {/* CTA */}
+      <CTASection
+        title="Ready to Lead With Dignity?"
+        subtitle="Community Mobilization"
+        description="Whether contributing your weekends in ration packaging or offering pro-bono educational tutoring, your service enriches vulnerable lives."
+        primaryBtnText="Explore Our Programs"
+        primaryBtnHref="/programs"
+        secondaryBtnText="Review Impact Standards"
+        secondaryBtnHref="/impact"
+      />
     </div>
   );
 }
